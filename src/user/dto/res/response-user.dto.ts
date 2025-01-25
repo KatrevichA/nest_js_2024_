@@ -1,23 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { CreateUserDto } from '../req/create-user.dto';
 
-export class ResponseUserDto {
+export class ResponseUserDto extends CreateUserDto {
   @ApiProperty()
   id?: string;
 
-  @ApiProperty({
-    description: 'Create a new user',
-    example: 'Stesha',
-    required: false,
-  })
-  name: string;
-
-  lastName?: string;
-
-  @ApiProperty({
-    description: 'Create a unique email',
-    default: 'Stesha@gmail.com',
-  })
-  email?: string;
-
-  phoneNumber?: string;
+  @ApiProperty()
+  status: boolean;
 }

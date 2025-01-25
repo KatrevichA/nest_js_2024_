@@ -1,7 +1,34 @@
-import { IsNotEmpty, IsString, Matches } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Matches,
+} from 'class-validator';
 import { Match } from '../../common/decorator/password.decorator';
+import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 
-export class CreateAuthDto {}
+export class CreateAuthDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsEmail()
+  @ApiProperty({
+    description: 'Create a unique email',
+    default: 'Stesha@gmail.com',
+  })
+  email: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty()
+  password: string;
+
+  @Type(() => Date)
+  @IsOptional()
+  date: string;
+}
+
 export class ForgotPassword {
   @IsString()
   // @IsStrongPassword()
