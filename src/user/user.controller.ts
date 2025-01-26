@@ -5,11 +5,11 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
+  Delete, Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/req/create-user.dto';
-import { UpdateUserDto } from './dto/req/update-user.dto';
+import { UserDto } from './dto/user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import {
   ApiConflictResponse,
   ApiCreatedResponse,
@@ -18,7 +18,8 @@ import {
   ApiTags,
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
-import { ResponseUserDto } from './dto/res/response-user.dto';
+import { BaseQueryDto } from '../common/validator/base.query.validator';
+
 
 @ApiTags('User_Module')
 @Controller('user')
@@ -26,17 +27,17 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('/create')
-  @ApiCreatedResponse({ type: ResponseUserDto })
+  @ApiCreatedResponse({ type: UserDto })
   @ApiConflictResponse({ description: 'Conflict' })
   @ApiUnprocessableEntityResponse({ description: 'Unprocessable entity' })
   @ApiForbiddenResponse({ description: 'Access denied' })
-  create(@Body() createUserDto: CreateUserDto) {
+  create(@Body() createUserDto: UserDto) {
     return this.userService.create(createUserDto);
   }
 
-  @Get()
-  findAll() {
-    return this.userService.findAll();
+  @Get('/list')
+  findAll(@Query() query:BaseQueryDto) {
+    return this.userService.findAll(query);
   }
 
   @Get(':id')

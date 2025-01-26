@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePostDto } from './dto/req/create-post.dto';
-import { UpdatePostDto } from './dto/req/update-post.dto';
+import { PostDto } from './dto/post.dto';
 
 @Injectable()
 export class PostService {
   public postList: any[] = [];
-  create(createPostDto: CreatePostDto) {
+  create(createPostDto: PostDto) {
     const index = new Date().valueOf();
     this.postList.push({
       ...createPostDto,
@@ -22,7 +21,7 @@ export class PostService {
     return `This action returns a #${id} post`;
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
+  update(id: number, updatePostDto: PostDto) {
     return `This action updates a #${id} post`;
   }
 

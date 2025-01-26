@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/req/create-user.dto';
-import { UpdateUserDto } from './dto/req/update-user.dto';
+import { UserDto } from './dto/user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { BaseQueryDto } from '../common/validator/base.query.validator';
 
 @Injectable()
 export class UserService {
   public usersList: any[] = [];
-  create(createUserDto: CreateUserDto) {
+  create(createUserDto: UserDto) {
     const index = new Date().valueOf();
     this.usersList.push({
       ...createUserDto,
@@ -14,7 +15,7 @@ export class UserService {
     return this.usersList[0];
   }
 
-  findAll() {
+  async findAll(query?: BaseQueryDto) {
     return this.usersList;
   }
 
