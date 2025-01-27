@@ -15,10 +15,10 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       port: postgresConfig.port,
       username: postgresConfig.user,
       password: postgresConfig.password,
-      database: postgresConfig.database,
+      database: postgresConfig.databaseName,
       entities: [User, Post],
       // migrations
-      synchronize: false,
+      synchronize: true,
     };
   }
 }

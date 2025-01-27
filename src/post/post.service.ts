@@ -1,20 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { PostDto } from './dto/post.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Post } from './entities/post.entity';
 
 @Injectable()
 export class PostService {
-  public postList: any[] = [];
-  create(createPostDto: PostDto) {
-    const index = new Date().valueOf();
-    this.postList.push({
-      ...createPostDto,
-      id: index,
-    });
-    return this.postList[0];
+
+  constructor(
+    @InjectRepository(Post)
+    private readonly postRepository: Repository<Post>,
+  ) {}
+
+  async create(body: PostDto) {
+    const post = await this.postRepository.save(
+      this.postRepository.create({ ...body }),
+    );
+    return {
+      title: post.title,
+      description: post.description,
+      body: post.body,
+      id: post.id,
+    };
   }
 
   findAll() {
-    return this.postList;
+    return `This action returns all post`;
   }
 
   findOne(id: number) {

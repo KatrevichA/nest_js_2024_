@@ -1,12 +1,12 @@
 import * as process from 'process';
 
 export default () => ({
-  port: process.env.PORT || 3000,
+  port: parseInt(process.env.PORT, 10) || 3000,
   database: {
     host: process.env.DATABASE_HOST,
-    port: process.env.DATABASE_PORT || 5432,
+    port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
     password: process.env.DB_PASSWORD,
     user: process.env.DB_USERNAME,
-    database: process.env.DB_NAME,
+    databaseName: process.env.DB_NAME,
   },
 });

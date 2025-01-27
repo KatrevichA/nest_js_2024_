@@ -18,7 +18,4 @@ export class Post extends BaseEntity {
 
   @Column('text', { nullable: true })
   body?: string;
-
-  @Column()
-  user_id: string;
 }
