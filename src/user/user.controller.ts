@@ -8,20 +8,22 @@ import {
   Delete, Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UserDto } from './dto/user.dto';
+import { UserDto, UserItemDto } from './dto/user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import {
   ApiConflictResponse,
-  ApiCreatedResponse,
+  ApiCreatedResponse, ApiExtraModels,
   ApiForbiddenResponse,
   ApiQuery,
   ApiTags,
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
 import { BaseQueryDto } from '../common/validator/base.query.validator';
+import { ApiPaginatedResponse, PaginatedDto } from '../common/interface/response.interface';
 
 
 @ApiTags('User_Module')
+@ApiExtraModels(UserItemDto, PaginatedDto)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -36,6 +38,7 @@ export class UserController {
   }
 
   @Get('/list')
+  @ApiPaginatedResponse('entities', UserItemDto)
   findAll(@Query() query:BaseQueryDto) {
     return this.userService.findAll(query);
   }
